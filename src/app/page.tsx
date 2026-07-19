@@ -1,6 +1,7 @@
 import Categories from "@/Components/Categories";
 import Faq from "@/Components/Faq";
 import Features from "@/Components/Feature";
+import FeaturedCourses from "@/Components/getLatestCourses";
 import Hero from "@/Components/HeroSection";
 import Newsletter from "@/Components/Newsletter";
 import Stats from "@/Components/Stats";
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <div>
       <Hero></Hero>
+      <FeaturedCourses></FeaturedCourses>
       <Features></Features>
       <Categories></Categories>
       <Stats></Stats>

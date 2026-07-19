@@ -1,7 +1,7 @@
 "use server";
 
 import { TCourse, TMutationResponse } from "@/types/cours";
-import { serverFetch, serverMutation } from "../core/server";
+import { protectedFetch, serverMutation } from "../core/server";
 
 // UPDATE
 export const updateCourse = async (
@@ -18,5 +18,5 @@ export const deleteCourse = async (id: string, userId: string) => {
 
 // GET - শুধু নিজের Courses
 export const getMyCourses = async (userId: string) => {
-  return serverFetch<TCourse[]>(`/api/add-course/user/${userId}`);
+  return protectedFetch<TCourse[]>(`/api/add-course/user/${userId}`);
 };

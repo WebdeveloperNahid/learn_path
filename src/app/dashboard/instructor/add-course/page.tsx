@@ -95,7 +95,7 @@ export default function AddCoursePage() {
     list: string[],
     setList: React.Dispatch<React.SetStateAction<string[]>>,
     index: number,
-    value: string
+    value: string,
   ) => {
     const updated = [...list];
     updated[index] = value;
@@ -104,7 +104,7 @@ export default function AddCoursePage() {
 
   const addListItem = (
     list: string[],
-    setList: React.Dispatch<React.SetStateAction<string[]>>
+    setList: React.Dispatch<React.SetStateAction<string[]>>,
   ) => {
     setList([...list, ""]);
   };
@@ -112,7 +112,7 @@ export default function AddCoursePage() {
   const removeListItem = (
     list: string[],
     setList: React.Dispatch<React.SetStateAction<string[]>>,
-    index: number
+    index: number,
   ) => {
     setList(list.filter((_, i) => i !== index));
   };
@@ -137,6 +137,10 @@ export default function AddCoursePage() {
     setIsLoading(true);
 
     try {
+      if (!session?.user?.id) {
+        toast.error("You must be logged in to create a course");
+        return;
+      }
       const payload = {
         ...form,
         price: Number(form.price),
@@ -159,7 +163,7 @@ export default function AddCoursePage() {
         toast.success("Course published successfully!");
 
         setTimeout(() => {
-          router.push("/all-courses");
+          router.push("/all-course");
           router.refresh();
         }, 1200);
       } else {
@@ -269,9 +273,7 @@ export default function AddCoursePage() {
                     type="text"
                     placeholder="e.g. Sarah Ahmed"
                     value={form.instructor}
-                    onChange={(e) =>
-                      handleChange("instructor", e.target.value)
-                    }
+                    onChange={(e) => handleChange("instructor", e.target.value)}
                     className="w-full bg-transparent py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400"
                   />
                 </div>
@@ -287,9 +289,7 @@ export default function AddCoursePage() {
                     type="text"
                     placeholder="English"
                     value={form.language}
-                    onChange={(e) =>
-                      handleChange("language", e.target.value)
-                    }
+                    onChange={(e) => handleChange("language", e.target.value)}
                     className="w-full bg-transparent py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400"
                   />
                 </div>
@@ -350,9 +350,7 @@ export default function AddCoursePage() {
                     type="text"
                     placeholder="8 Weeks"
                     value={form.duration}
-                    onChange={(e) =>
-                      handleChange("duration", e.target.value)
-                    }
+                    onChange={(e) => handleChange("duration", e.target.value)}
                     className="w-full bg-transparent py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400"
                   />
                 </div>
@@ -387,7 +385,7 @@ export default function AddCoursePage() {
                     onChange={(e) =>
                       handleChange(
                         "certificate",
-                        e.target.value as "yes" | "no"
+                        e.target.value as "yes" | "no",
                       )
                     }
                     className="w-full bg-transparent py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400"
@@ -407,9 +405,7 @@ export default function AddCoursePage() {
                   <input
                     type="date"
                     value={form.startDate}
-                    onChange={(e) =>
-                      handleChange("startDate", e.target.value)
-                    }
+                    onChange={(e) => handleChange("startDate", e.target.value)}
                     className="w-full bg-transparent py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400"
                   />
                 </div>
@@ -446,9 +442,7 @@ export default function AddCoursePage() {
                       type="text"
                       placeholder="e.g. Dhanmondi, Dhaka"
                       value={form.location}
-                      onChange={(e) =>
-                        handleChange("location", e.target.value)
-                      }
+                      onChange={(e) => handleChange("location", e.target.value)}
                       className="w-full bg-transparent py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400"
                     />
                   </div>
@@ -498,7 +492,7 @@ export default function AddCoursePage() {
                             gallery,
                             setGallery,
                             index,
-                            e.target.value
+                            e.target.value,
                           )
                         }
                         className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
@@ -560,9 +554,7 @@ export default function AddCoursePage() {
                   rows={5}
                   placeholder="Detailed overview of what this course covers"
                   value={form.description}
-                  onChange={(e) =>
-                    handleChange("description", e.target.value)
-                  }
+                  onChange={(e) => handleChange("description", e.target.value)}
                   className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
@@ -590,7 +582,7 @@ export default function AddCoursePage() {
                           learnings,
                           setLearnings,
                           index,
-                          e.target.value
+                          e.target.value,
                         )
                       }
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-800 outline-none placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
@@ -637,7 +629,7 @@ export default function AddCoursePage() {
                           requirements,
                           setRequirements,
                           index,
-                          e.target.value
+                          e.target.value,
                         )
                       }
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-800 outline-none placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
@@ -657,9 +649,7 @@ export default function AddCoursePage() {
                 ))}
                 <button
                   type="button"
-                  onClick={() =>
-                    addListItem(requirements, setRequirements)
-                  }
+                  onClick={() => addListItem(requirements, setRequirements)}
                   className="flex items-center gap-1 text-xs font-semibold text-indigo-600 transition-colors hover:text-violet-600"
                 >
                   <FiPlus className="h-3.5 w-3.5" /> Add item

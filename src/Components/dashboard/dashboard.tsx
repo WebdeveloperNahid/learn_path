@@ -16,8 +16,9 @@ import { Button, Drawer } from "@heroui/react";
 
 import { useSession } from "@/lib/auth-client";
 
-import { TfiMenuAlt } from "react-icons/tfi";
+
 import { COLORS } from "@/lib/theme";
+import { RiSideBarFill } from "react-icons/ri";
 
 type NavItem = {
   icon: ComponentType<SVGProps<SVGSVGElement>>;
@@ -93,7 +94,7 @@ export function DashboardSidebar() {
           className="mb-1 px-3 text-xs font-semibold uppercase tracking-wider"
           style={{ color: COLORS.inkMuted }}
         >
-          {isAdmin ? "Admin" : "User"}
+          {isAdmin ? "instructor" : "student"}
         </p>
         {renderLinks(items)}
       </div>
@@ -115,7 +116,7 @@ export function DashboardSidebar() {
           variant="secondary"
           style={{ color: COLORS.ocean, borderColor: COLORS.ocean }}
         >
-          <TfiMenuAlt />
+          <RiSideBarFill />
         </Button>
         <Drawer.Backdrop>
           <Drawer.Content placement="left">
