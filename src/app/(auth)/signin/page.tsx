@@ -229,7 +229,7 @@ export default function LoginPage() {
 
           <p className="mt-6 text-center text-sm font-medium text-slate-600">
             Don&apos;t have an account?{" "}
-            <Link href="/signup" className="font-bold text-indigo-600 hover:underline">
+            <Link href={`/signup?redirect=${encodeURIComponent(redirectTo)}`} className="font-bold text-indigo-600 hover:underline">
               Sign up
             </Link>
           </p>

@@ -156,7 +156,7 @@ export default function Navbar({ user }: NavbarProps) {
           ) : (
             <>
               <Link
-                href="/login"
+                href="/signin"
                 className="rounded-lg px-4 py-2 text-sm font-semibold text-slate-700 transition hover:text-indigo-600"
               >
                 Sign In
@@ -236,7 +236,7 @@ export default function Navbar({ user }: NavbarProps) {
                 ) : (
                   <>
                     <Link
-                      href="/login"
+                      href="/signin"
                       onClick={() => setIsOpen(false)}
                       className="rounded-lg border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700"
                     >
