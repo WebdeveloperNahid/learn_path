@@ -20,8 +20,8 @@ import {
 } from "react-icons/fi";
 
 import toast from "react-hot-toast";
-// import { createAddCourse } from "@/lib/actions/add-course";
 import { useSession } from "@/lib/auth-client";
+import { createAddCours } from "@/lib/actions/add-cours";
 
 const CATEGORIES = [
   "Web Development",
@@ -152,7 +152,7 @@ export default function AddCoursePage() {
         requirements: requirements.filter((r) => r.trim() !== ""),
       };
 
-      const result = await createAddCourse(payload);
+      const result = await createAddCours(payload);
 
       if (result?.insertedId || result?.acknowledged) {
         setSuccess("Course published successfully! Redirecting...");

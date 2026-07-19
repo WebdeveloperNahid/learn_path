@@ -20,18 +20,21 @@ type NavbarProps = {
 
 const loggedOutLinks = [
   { label: "Home", href: "/" },
-  { label: "Explore Courses", href: "/explore" },
+  { label: "Explore Courses", href: "/all-course" },
   { label: "About", href: "/about" },
+  { label: "Help/Saport", href: "/help" },
 ];
 
 const getLoggedInLinks = (role: "student" | "instructor") => {
   const common = [
     { label: "Home", href: "/" },
-    { label: "Explore Courses", href: "/explore" },
+    { label: "Explore Courses", href: "/all-course" },
+    { label: "About", href: "/about" },
+    { label: "Help", href: "/help" },
     { label: "Dashboard", href: "/dashboard" },
   ];
 
-  if (role === "instructor") {l
+  if (role === "instructor") {
     return [
       ...common,
       // { label: "Create Course", href: "/items/add" },

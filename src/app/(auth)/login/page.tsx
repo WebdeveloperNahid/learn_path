@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { HiOutlineMail, HiOutlineLockClosed, HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
@@ -27,6 +27,8 @@ type FormErrors = {
 
 export default function LoginPage() {
   const router = useRouter();
+    const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState<FormErrors>({});
@@ -55,18 +57,17 @@ export default function LoginPage() {
   };
 
   const performLogin = async (email: string, password: string) => {
-    const { error } = await authClient.signIn.email({ email, password });
+  const { error } = await authClient.signIn.email({ email, password });
 
-    if (error) {
-      toast.error(error.message || "Invalid email or password");
-      return;
-    }
+  if (error) {
+    toast.error(error.message || "Invalid email or password");
+    return;
+  }
 
-    toast.success("Logged in successfully!");
-    router.push("/");
-    router.refresh();
-  };
-
+  toast.success("Logged in successfully!");
+  router.push(redirectTo);
+  router.refresh();
+};
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
@@ -99,7 +100,7 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     try {
       setGoogleLoading(true);
-      await authClient.signIn.social({ provider: "google", callbackURL: "/" });
+      await authClient.signIn.social({ provider: "google", callbackURL: redirectTo });
     } catch {
       toast.error("Google sign-in failed. Please try again.");
       setGoogleLoading(false);
