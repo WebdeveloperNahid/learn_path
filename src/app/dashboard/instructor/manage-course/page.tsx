@@ -108,24 +108,24 @@ export default function ManageCoursesPage() {
     );
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-white via-white to-indigo-50/40 px-4 py-10 sm:px-6 lg:px-8">
+    <section className="min-h-screen bg-gradient-to-b from-white via-white to-indigo-50/40 px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
       <div className="mx-auto mb-8 max-w-4xl text-center">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-1.5 text-xs font-semibold tracking-wide text-white shadow-md shadow-indigo-200">
           <FiBookOpen className="h-3.5 w-3.5" />
           INSTRUCTOR STUDIO
         </span>
-        <h1 className="mt-4 text-3xl font-bold text-slate-900">
+        <h1 className="mt-4 text-2xl font-bold text-slate-900 sm:text-3xl">
           Manage Your Courses
         </h1>
         <span className="mx-auto mt-3 block h-1 w-16 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600" />
-        <p className="mt-3 text-slate-500">
+        <p className="mt-3 text-sm text-slate-500 sm:text-base">
           Edit or remove the courses you have published
         </p>
       </div>
 
       <div className="mx-auto max-w-4xl">
         {courses.length === 0 && (
-          <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center text-slate-500 shadow-sm">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center text-sm text-slate-500 shadow-sm sm:p-10 sm:text-base">
             You have not published any courses yet.
           </div>
         )}
@@ -134,7 +134,7 @@ export default function ManageCoursesPage() {
           {courses.map((course) => (
             <div
               key={course._id}
-              className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-colors hover:border-indigo-200"
+              className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-colors hover:border-indigo-200 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="flex min-w-0 items-center gap-4">
                 {course.image && (
@@ -142,7 +142,7 @@ export default function ManageCoursesPage() {
                   <img
                     src={course.image}
                     alt={course.title}
-                    className="h-16 w-16 shrink-0 rounded-xl object-cover"
+                    className="h-14 w-14 shrink-0 rounded-xl object-cover sm:h-16 sm:w-16"
                   />
                 )}
                 <div className="min-w-0">
@@ -158,17 +158,17 @@ export default function ManageCoursesPage() {
                 </div>
               </div>
 
-              <div className="flex shrink-0 gap-2">
+              <div className="flex shrink-0 gap-2 sm:gap-2">
                 <button
                   onClick={() => setEditingCourse(course)}
-                  className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-3 py-2 text-xs font-bold text-white shadow-sm shadow-indigo-200 transition-all hover:shadow-md"
+                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-3 py-2 text-xs font-bold text-white shadow-sm shadow-indigo-200 transition-all hover:shadow-md sm:flex-none"
                 >
                   <FiEdit2 className="h-3.5 w-3.5" />
                   Edit
                 </button>
                 <button
                   onClick={() => setDeletingCourse(course)}
-                  className="flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-600 transition-colors hover:bg-red-100"
+                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-600 transition-colors hover:bg-red-100 sm:flex-none"
                 >
                   <FiTrash2 className="h-3.5 w-3.5" />
                   Delete
@@ -283,8 +283,8 @@ function EditCourseModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-slate-200 border-t-4 border-t-indigo-600 bg-white p-6 shadow-sm sm:p-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-0 sm:p-4">
+      <div className="h-full w-full overflow-y-auto rounded-none border-0 border-t-4 border-t-indigo-600 bg-white p-4 shadow-sm sm:h-auto sm:max-h-[90vh] sm:w-full sm:max-w-2xl sm:rounded-3xl sm:border sm:border-slate-200 sm:p-6 sm:p-8">
         <h2 className="flex items-center gap-2.5 text-base font-bold text-slate-900">
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 text-white">
             <FiEdit2 className="h-3.5 w-3.5" />
@@ -302,7 +302,7 @@ function EditCourseModal({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <label className="text-xs font-semibold text-slate-700">Category</label>
               <select
@@ -333,7 +333,7 @@ function EditCourseModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <label className="text-xs font-semibold text-slate-700">Instructor</label>
               <input
@@ -352,7 +352,7 @@ function EditCourseModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div>
               <label className="text-xs font-semibold text-slate-700">Price (USD)</label>
               <input
@@ -389,7 +389,7 @@ function EditCourseModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div>
               <label className="text-xs font-semibold text-slate-700">Duration</label>
               <input
@@ -420,7 +420,7 @@ function EditCourseModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <label className="text-xs font-semibold text-slate-700">Mode</label>
               <select
@@ -586,18 +586,18 @@ function EditCourseModal({
           </div>
         </div>
 
-        <div className="sticky bottom-0 mt-6 flex justify-end gap-2 border-t border-slate-100 bg-white pt-4">
+        <div className="sticky bottom-0 mt-6 flex flex-col-reverse gap-2 border-t border-slate-100 bg-white pt-4 sm:flex-row sm:justify-end">
           <button
             onClick={onClose}
             disabled={saving}
-            className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50"
+            className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50 sm:w-auto"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-indigo-200 transition-all hover:shadow-lg disabled:opacity-60"
+            className="w-full rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-indigo-200 transition-all hover:shadow-lg disabled:opacity-60 sm:w-auto"
           >
             {saving ? "Saving..." : "Save Changes"}
           </button>
@@ -626,7 +626,7 @@ function ConfirmDeleteModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-sm rounded-3xl border border-slate-200 border-t-4 border-t-red-500 bg-white p-6 shadow-sm">
+      <div className="w-full max-w-sm rounded-3xl border border-slate-200 border-t-4 border-t-red-500 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-lg font-bold text-slate-900">Delete this course?</h2>
         <p className="mt-2 text-sm text-slate-500">
           Are you sure you want to delete{" "}
@@ -634,18 +634,18 @@ function ConfirmDeleteModal({
           This action cannot be undone.
         </p>
 
-        <div className="mt-6 flex justify-end gap-2">
+        <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <button
             onClick={onCancel}
             disabled={deleting}
-            className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50"
+            className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50 sm:w-auto"
           >
             Cancel
           </button>
           <button
             onClick={handleConfirmClick}
             disabled={deleting}
-            className="rounded-xl bg-red-500 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-red-600 disabled:opacity-50"
+            className="w-full rounded-xl bg-red-500 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-red-600 disabled:opacity-50 sm:w-auto"
           >
             {deleting ? "Deleting..." : "Yes, delete it"}
           </button>

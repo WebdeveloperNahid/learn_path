@@ -28,6 +28,7 @@ type NavItem = {
 export function DashboardSidebar() {
   const pathname = usePathname();
   const { data: session, isPending } = useSession();
+  
 
   // While the session is still resolving, server and first client paint both
   // fall through to `isAdmin = false` — identical output, so hydration can't
@@ -37,9 +38,9 @@ export function DashboardSidebar() {
 
   const userItems: NavItem[] = [
     { icon: House, label: "Home", href: "/dashboard/student" },
-    { icon: Person, label: "Browse-Tours", href: "/all-course" },
+    { icon: Person, label: "Browse-Course", href: "/all-course" },
     { icon: Gear, label: "Booking-Request", href: "/dashboard/student/booking-request" },
-    { icon: Envelope, label: "Review-Tours", href: "/dashboard/user/review" },
+    { icon: Envelope, label: "Review-Course", href: "/dashboard/user/review" },
   ];
 
   const adminItems: NavItem[] = [
