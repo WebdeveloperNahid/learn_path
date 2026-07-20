@@ -1,3 +1,4 @@
+<img width="1916" height="967" alt="Screenshot 2026-07-20 142149" src="https://github.com/user-attachments/assets/37a05b96-d05b-4c37-ad49-2b5a7e642758" />
 # LearnPath 🎓
 
 **AI-Powered Course Discovery & Learning Platform**
@@ -5,9 +6,6 @@
 LearnPath is a full-stack agentic AI application that helps students discover the right courses through AI-powered recommendations and an intelligent chat assistant, while giving instructors a simple platform to publish and manage their own courses.
 
 ---
-
-![Uploading Screenshot 2026-07-20 142149.png…]()
-
 
 
 ## 🚀 Live Demo
