@@ -243,7 +243,7 @@ export default function Navbar({ user }: NavbarProps) {
                       Sign In
                     </Link>
                     <Link
-                      href="/register"
+                      href="/signup"
                       onClick={() => setIsOpen(false)}
                       className="rounded-lg bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-3 text-center text-sm font-semibold text-white"
                     >
