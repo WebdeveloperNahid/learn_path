@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentType, SVGProps } from "react";
-
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -15,8 +15,6 @@ import {
 import { Button, Drawer } from "@heroui/react";
 
 import { useSession } from "@/lib/auth-client";
-
-
 import { COLORS } from "@/lib/theme";
 import { RiSideBarFill } from "react-icons/ri";
 
@@ -29,13 +27,18 @@ type NavItem = {
 export function DashboardSidebar() {
   const pathname = usePathname();
   const { data: session, isPending } = useSession();
-  
 
-  // While the session is still resolving, server and first client paint both
-  // fall through to `isAdmin = false` — identical output, so hydration can't
-  // mismatch. Once isPending flips to false, this updates safely post-hydration.
+  // ⭐ নতুন — client এ mount হওয়ার আগ পর্যন্ত সবসময় server এর সাথে মিলিয়ে "false" রাখা হচ্ছে
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // mounted না হওয়া পর্যন্ত সবসময় false (server output এর সাথে মিলবে)
   const isAdmin =
-    !isPending && (session?.user as { role?: string })?.role === "instructor";
+    mounted &&
+    !isPending &&
+    (session?.user as { role?: string })?.role === "instructor";
 
   const userItems: NavItem[] = [
     { icon: House, label: "Home", href: "/dashboard/student" },
@@ -68,7 +71,6 @@ export function DashboardSidebar() {
               backgroundColor: isActive ? COLORS.ocean50 : "transparent",
             }}
           >
-            {/* active-route accent bar — single brand color, no gradient noise */}
             <span
               className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full transition-opacity duration-200"
               style={{
@@ -94,7 +96,7 @@ export function DashboardSidebar() {
           className="mb-1 px-3 text-xs font-semibold uppercase tracking-wider"
           style={{ color: COLORS.inkMuted }}
         >
-          {isAdmin ? "instructor" : "student"}
+          {!mounted ? "\u00A0" : isAdmin ? "instructor" : "student"}
         </p>
         {renderLinks(items)}
       </div>

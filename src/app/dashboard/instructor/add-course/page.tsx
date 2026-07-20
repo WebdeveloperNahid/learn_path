@@ -22,6 +22,8 @@ import {
 import toast from "react-hot-toast";
 import { useSession } from "@/lib/auth-client";
 import { createAddCours } from "@/lib/actions/add-cours";
+import { generateCourseDescription } from "@/lib/actions/ai";
+import { HiSparkles } from "react-icons/hi2";
 
 const CATEGORIES = [
   "Web Development",
@@ -86,6 +88,7 @@ export default function AddCoursePage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [aiGenerating, setAiGenerating] = useState(false);
 
   const handleChange = (field: keyof CourseFormState, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -115,6 +118,43 @@ export default function AddCoursePage() {
     index: number,
   ) => {
     setList(list.filter((_, i) => i !== index));
+  };
+
+  const handleGenerateDescription = async () => {
+    if (!form.title || !form.category) {
+      toast.error("Please enter a course title and category first");
+      return;
+    }
+
+    setAiGenerating(true);
+    try {
+      const result = await generateCourseDescription({
+        title: form.title,
+        category: form.category,
+        level: form.level,
+        length: "medium",
+      });
+
+      if (result?.description) {
+        const sentences = result.description.split(". ");
+        const shortDesc =
+          sentences[0] + (sentences[0].endsWith(".") ? "" : ".");
+
+        setForm((prev) => ({
+          ...prev,
+          description: result.description,
+          shortDescription:
+            shortDesc.length > 150 ? shortDesc.slice(0, 150) : shortDesc,
+        }));
+        toast.success("Description generated!");
+      } else {
+        toast.error("Failed to generate description");
+      }
+    } catch {
+      toast.error("AI generation failed. Please try again.");
+    } finally {
+      setAiGenerating(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -524,12 +564,23 @@ export default function AddCoursePage() {
 
           {/* Description */}
           <div className="border-t border-slate-100 pt-8">
-            <h2 className="flex items-center gap-2.5 text-base font-bold text-slate-900">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 text-white">
-                <FiList className="h-3.5 w-3.5" />
-              </span>
-              Description
-            </h2>
+            <div className="flex items-center justify-between">
+              <h2 className="flex items-center gap-2.5 text-base font-bold text-slate-900">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 text-white">
+                  <FiList className="h-3.5 w-3.5" />
+                </span>
+                Description
+              </h2>
+              <button
+                type="button"
+                onClick={handleGenerateDescription}
+                disabled={aiGenerating}
+                className="flex items-center gap-1.5 rounded-lg border-2 border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-bold text-indigo-700 transition hover:bg-indigo-100 disabled:opacity-50"
+              >
+                <HiSparkles className="h-3.5 w-3.5" />
+                {aiGenerating ? "Generating..." : "Generate with AI"}
+              </button>
+            </div>
             <div className="mt-4 space-y-4">
               <div>
                 <label className="text-xs font-semibold text-slate-700">

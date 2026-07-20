@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "../Components/Navbar";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/Components/Footer";
+import ChatWidget from "@/Components/ChatWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
         <Navbar></Navbar>
         {children}
         <Footer></Footer>
+        <ChatWidget></ChatWidget>
     
         </body>
     </html>
