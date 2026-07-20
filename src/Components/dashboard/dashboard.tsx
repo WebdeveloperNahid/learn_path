@@ -1,12 +1,10 @@
 "use client";
 
 import type { ComponentType, SVGProps } from "react";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Envelope,
-  Gear,
   House,
   Person,
   Plus,
@@ -15,7 +13,6 @@ import {
 import { Button, Drawer } from "@heroui/react";
 
 import { useSession } from "@/lib/auth-client";
-import { COLORS } from "@/lib/theme";
 import { RiSideBarFill } from "react-icons/ri";
 
 type NavItem = {
@@ -28,36 +25,25 @@ export function DashboardSidebar() {
   const pathname = usePathname();
   const { data: session, isPending } = useSession();
 
-  // ⭐ নতুন — client এ mount হওয়ার আগ পর্যন্ত সবসময় server এর সাথে মিলিয়ে "false" রাখা হচ্ছে
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // mounted না হওয়া পর্যন্ত সবসময় false (server output এর সাথে মিলবে)
   const isAdmin =
-    mounted &&
-    !isPending &&
-    (session?.user as { role?: string })?.role === "instructor";
+    !isPending && (session?.user as { role?: string })?.role === "instructor";
 
   const userItems: NavItem[] = [
     { icon: House, label: "Home", href: "/dashboard/student" },
-    { icon: Person, label: "Browse-Course", href: "/all-course" },
-    { icon: Gear, label: "Booking-Request", href: "/dashboard/student/booking-request" },
-    { icon: Envelope, label: "Review-Course", href: "/dashboard/user/review" },
+    { icon: Person, label: "Browse Courses", href: "/all-course" },
+    { icon: Envelope, label: "Review Course", href: "/dashboard/user/review" },
   ];
 
   const adminItems: NavItem[] = [
     { icon: House, label: "Home", href: "/dashboard/instructor" },
-    { icon: Plus, label: "Add Tour", href: "/dashboard/instructor/add-course" },
-    { icon: ListCheck, label: "Manage Tours", href: "/dashboard/instructor/manage-course" },
-    { icon: Gear, label: "Booking-Request", href: "/dashboard/instructor/booking-request" },
+    { icon: Plus, label: "Add Course", href: "/dashboard/instructor/add-course" },
+    { icon: ListCheck, label: "Manage Courses", href: "/dashboard/instructor/manage-course" },
   ];
 
   const items = isAdmin ? adminItems : userItems;
 
   const renderLinks = (list: NavItem[]) => (
-    <nav className="flex flex-col gap-1">
+    <nav className="flex flex-col gap-0.5">
       {list.map((item) => {
         const isActive = pathname === item.href;
 
@@ -65,22 +51,21 @@ export function DashboardSidebar() {
           <Link
             key={item.href}
             href={item.href}
-            className="group relative flex items-center gap-3 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 hover:bg-slate-50"
-            style={{
-              color: isActive ? COLORS.ocean : COLORS.inkMuted,
-              backgroundColor: isActive ? COLORS.ocean50 : "transparent",
-            }}
+            className={`group relative flex items-center gap-2 whitespace-nowrap rounded-md px-2 py-1.5 text-sm font-medium transition-all duration-200 ${
+              isActive
+                ? "bg-indigo-50 text-indigo-700"
+                : "text-slate-500 hover:bg-slate-50 hover:text-slate-700"
+            }`}
           >
             <span
-              className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full transition-opacity duration-200"
-              style={{
-                backgroundColor: COLORS.ocean,
-                opacity: isActive ? 1 : 0,
-              }}
+              className={`absolute left-0 top-1/2 h-3.5 w-[3px] -translate-y-1/2 rounded-full bg-gradient-to-b from-indigo-600 to-violet-600 transition-opacity duration-200 ${
+                isActive ? "opacity-100" : "opacity-0"
+              }`}
             />
             <item.icon
-              className="size-4 transition-colors duration-200"
-              style={{ color: isActive ? COLORS.ocean : COLORS.inkMuted }}
+              className={`size-4 shrink-0 transition-colors duration-200 ${
+                isActive ? "text-indigo-600" : "text-slate-400"
+              }`}
             />
             {item.label}
           </Link>
@@ -90,33 +75,27 @@ export function DashboardSidebar() {
   );
 
   const NavContent = (
-    <div className="flex flex-col gap-6">
-      <div>
-        <p
-          className="mb-1 px-3 text-xs font-semibold uppercase tracking-wider"
-          style={{ color: COLORS.inkMuted }}
-        >
-          {!mounted ? "\u00A0" : isAdmin ? "instructor" : "student"}
-        </p>
-        {renderLinks(items)}
-      </div>
+    <div>
+      <p
+        suppressHydrationWarning
+        className="mb-0.5 px-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400"
+      >
+        {isAdmin ? "instructor" : "student"}
+      </p>
+      {renderLinks(items)}
     </div>
   );
 
   return (
     <>
-      <aside
-        className="hidden w-fit flex-shrink-0 border-r bg-white px-3 py-4 lg:block"
-        style={{ borderColor: COLORS.ocean50 }}
-      >
+      <aside className="hidden w-44 flex-shrink-0 border-r border-slate-100 bg-white px-2 py-3 lg:block">
         {NavContent}
       </aside>
 
       <Drawer>
         <Button
-          className="lg:hidden"
+          className="border-indigo-200 text-indigo-600 lg:hidden"
           variant="secondary"
-          style={{ color: COLORS.ocean, borderColor: COLORS.ocean }}
         >
           <RiSideBarFill />
         </Button>
@@ -125,7 +104,7 @@ export function DashboardSidebar() {
             <Drawer.Dialog>
               <Drawer.CloseTrigger />
               <Drawer.Header>
-                <Drawer.Heading style={{ color: COLORS.ink }}>
+                <Drawer.Heading className="text-slate-900">
                   Navigation
                 </Drawer.Heading>
               </Drawer.Header>
