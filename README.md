@@ -7,6 +7,7 @@ LearnPath is a full-stack agentic AI application that helps students discover th
 ---
 ![Uploading Screenshot 2026-07-20 142149.png…]()
 
+
 ## 🚀 Live Demo
 
 - **Live Website:** https://learn-path-sandy.vercel.app
