@@ -5,6 +5,7 @@
 LearnPath is a full-stack agentic AI application that helps students discover the right courses through AI-powered recommendations and an intelligent chat assistant, while giving instructors a simple platform to publish and manage their own courses.
 
 ---
+![Uploading Screenshot 2026-07-20 142149.png…]()
 
 ## 🚀 Live Demo
 
