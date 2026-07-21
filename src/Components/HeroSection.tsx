@@ -111,7 +111,7 @@ export default function Hero() {
           {/* CTA buttons */}
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <Link
-              href="/explore"
+              href="/all-course"
               className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white transition hover:bg-slate-800"
             >
               <HiOutlineAcademicCap className="h-5 w-5" />
