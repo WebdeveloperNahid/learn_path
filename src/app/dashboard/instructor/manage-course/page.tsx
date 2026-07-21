@@ -3,9 +3,10 @@
 import { deleteCourse, getMyCourses, updateCourse } from "@/lib/api/modify-course";
 import { useSession } from "@/lib/auth-client";
 import { TCourse } from "@/types/cours";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FiBookOpen, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiBookOpen, FiEdit2, FiEye, FiTrash2 } from "react-icons/fi";
 
 const CATEGORIES = [
   "Web Development",
@@ -119,7 +120,7 @@ export default function ManageCoursesPage() {
         </h1>
         <span className="mx-auto mt-3 block h-1 w-16 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600" />
         <p className="mt-3 text-sm text-slate-500 sm:text-base">
-          Edit or remove the courses you have published
+          View, edit, or remove the courses you have published
         </p>
       </div>
 
@@ -158,19 +159,28 @@ export default function ManageCoursesPage() {
                 </div>
               </div>
 
-              <div className="flex shrink-0 gap-2 sm:gap-2">
+              <div className="grid shrink-0 grid-cols-3 gap-1.5 sm:flex sm:gap-2">
+                <Link
+                  href={`/all-course/${course._id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1 rounded-xl border border-indigo-200 bg-indigo-50 px-2 py-1.5 text-[11px] font-bold text-indigo-600 transition-colors hover:bg-indigo-100 sm:gap-1.5 sm:px-3 sm:py-2 sm:text-xs"
+                >
+                  <FiEye className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                  View
+                </Link>
                 <button
                   onClick={() => setEditingCourse(course)}
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-3 py-2 text-xs font-bold text-white shadow-sm shadow-indigo-200 transition-all hover:shadow-md sm:flex-none"
+                  className="flex items-center justify-center gap-1 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-2 py-1.5 text-[11px] font-bold text-white shadow-sm shadow-indigo-200 transition-all hover:shadow-md sm:gap-1.5 sm:px-3 sm:py-2 sm:text-xs"
                 >
-                  <FiEdit2 className="h-3.5 w-3.5" />
+                  <FiEdit2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   Edit
                 </button>
                 <button
                   onClick={() => setDeletingCourse(course)}
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-600 transition-colors hover:bg-red-100 sm:flex-none"
+                  className="flex items-center justify-center gap-1 rounded-xl border border-red-200 bg-red-50 px-2 py-1.5 text-[11px] font-bold text-red-600 transition-colors hover:bg-red-100 sm:gap-1.5 sm:px-3 sm:py-2 sm:text-xs"
                 >
-                  <FiTrash2 className="h-3.5 w-3.5" />
+                  <FiTrash2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   Delete
                 </button>
               </div>

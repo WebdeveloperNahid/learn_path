@@ -89,10 +89,13 @@ export default function AddCoursePage() {
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [aiGenerating, setAiGenerating] = useState(false);
+  const [descriptionLength, setDescriptionLength] = useState <
+  "short" | "medium" | "long"
+>("medium");
 
-  const handleChange = (field: keyof CourseFormState, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
+const handleChange = (field: keyof CourseFormState, value: string) => {
+  setForm((prev) => ({ ...prev, [field]: value }));
+};
 
   const updateListItem = (
     list: string[],
@@ -132,7 +135,7 @@ export default function AddCoursePage() {
         title: form.title,
         category: form.category,
         level: form.level,
-        length: "medium",
+        length: descriptionLength,
       });
 
       if (result?.description) {
@@ -564,22 +567,44 @@ export default function AddCoursePage() {
 
           {/* Description */}
           <div className="border-t border-slate-100 pt-8">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="flex items-center gap-2.5 text-base font-bold text-slate-900">
                 <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 text-white">
                   <FiList className="h-3.5 w-3.5" />
                 </span>
                 Description
               </h2>
-              <button
-                type="button"
-                onClick={handleGenerateDescription}
-                disabled={aiGenerating}
-                className="flex items-center gap-1.5 rounded-lg border-2 border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-bold text-indigo-700 transition hover:bg-indigo-100 disabled:opacity-50"
-              >
-                <HiSparkles className="h-3.5 w-3.5" />
-                {aiGenerating ? "Generating..." : "Generate with AI"}
-              </button>
+
+              <div className="flex items-center gap-2">
+                {/* Adjustable output length selector */}
+                <select
+                  value={descriptionLength}
+                  onChange={(e) =>
+                    setDescriptionLength(
+                      e.target.value as "short" | "medium" | "long",
+                    )
+                  }
+                  className="rounded-lg border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-700 outline-none focus:border-indigo-400"
+                >
+                  <option value="short">Short</option>
+                  <option value="medium">Medium</option>
+                  <option value="long">Long</option>
+                </select>
+
+                <button
+                  type="button"
+                  onClick={handleGenerateDescription}
+                  disabled={aiGenerating}
+                  className="flex items-center gap-1.5 rounded-lg border-2 border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-bold text-indigo-700 transition hover:bg-indigo-100 disabled:opacity-50"
+                >
+                  <HiSparkles className="h-3.5 w-3.5" />
+                  {aiGenerating
+                    ? "Generating..."
+                    : form.description
+                    ? "Regenerate"
+                    : "Generate with AI"}
+                </button>
+              </div>
             </div>
             <div className="mt-4 space-y-4">
               <div>

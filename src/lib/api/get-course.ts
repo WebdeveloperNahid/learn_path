@@ -35,7 +35,7 @@ export const getAllCourses = async (
   if (filters.page) params.set("page", filters.page);
 
   const query = params.toString();
-  const data = await protectedFetch<TCoursesResponse>(
+  const data = await serverFetch<TCoursesResponse>(
     `/api/add-course${query ? `?${query}` : ""}`,
     `/all-course${query ? `?${query}` : ""}`
   );
@@ -47,7 +47,7 @@ export const getAllCourses = async (
 
 // Get -- Single Course By ID
 export const getCourseById = async (id: string): Promise<TCourse | null> => {
-  const data = await protectedFetch<TCourse>(
+  const data = await serverFetch<TCourse>(
     `/api/add-course/${id}`,
     `/all-course/${id}`
   );

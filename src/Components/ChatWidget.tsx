@@ -10,11 +10,25 @@ type Message = {
   text: string;
 };
 
-const SUGGESTED_PROMPTS = [
+const INITIAL_PROMPTS = [
   "What courses do you offer?",
   "Recommend a course for beginners",
   "How do I become an instructor?",
 ];
+
+// প্রতিটা AI reply-র পর দেখানোর জন্য rotating follow-up prompt pool
+const FOLLOW_UP_POOL = [
+  "Tell me more about that",
+  "Show me similar courses",
+  "What's the price range?",
+  "How do I enroll?",
+  "Any beginner-friendly options?",
+  "Who teaches this course?",
+];
+
+function getRandomFollowUps(count = 3) {
+  return [...FOLLOW_UP_POOL].sort(() => 0.5 - Math.random()).slice(0, count);
+}
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +37,7 @@ export default function ChatWidget() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [followUps, setFollowUps] = useState<string[]>(INITIAL_PROMPTS);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,6 +51,7 @@ export default function ChatWidget() {
     const newMessages: Message[] = [...messages, { role: "user", text }];
     setMessages(newMessages);
     setInput("");
+    setFollowUps([]); // ইউজার নতুন প্রশ্ন করলে পুরনো suggestion সরিয়ে দাও
     setLoading(true);
 
     try {
@@ -44,6 +60,7 @@ export default function ChatWidget() {
 
       if (result?.reply) {
         setMessages((prev) => [...prev, { role: "model", text: result.reply }]);
+        setFollowUps(getRandomFollowUps()); // ✅ প্রতিটা AI reply-র পর নতুন follow-up suggestion
       } else {
         setMessages((prev) => [...prev, { role: "model", text: "Sorry, something went wrong. Please try again." }]);
       }
@@ -107,9 +124,10 @@ export default function ChatWidget() {
               </div>
             )}
 
-            {messages.length === 1 && !loading && (
+            {/* ✅ প্রতিটা AI reply-র পরে (এবং শুরুতেও) follow-up suggestion দেখাবে */}
+            {!loading && followUps.length > 0 && (
               <div className="flex flex-col gap-2 pt-2">
-                {SUGGESTED_PROMPTS.map((p) => (
+                {followUps.map((p) => (
                   <button
                     key={p}
                     onClick={() => handleSend(p)}

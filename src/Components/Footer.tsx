@@ -5,14 +5,14 @@ import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker } from "react-ic
 
 const footerLinks = {
   platform: [
-    { label: "Explore Courses", href: "/explore" },
-    { label: "Become an Instructor", href: "/signup" },
+    { label: "Explore Courses", href: "/all-course" },
+    { label: "Become an Instructor or Student", href: "/signin" },
     { label: "Dashboard", href: "/dashboard" },
   ],
   company: [
     { label: "About Us", href: "/about" },
-    { label: "Contact", href: "/contact" },
-    { label: "Blog", href: "/blog" },
+    { label: "Help", href: "/help" },
+   
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
