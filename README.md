@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<img width="1916" height="967" alt="Screenshot 2026-07-20 142149" src="https://github.com/user-attachments/assets/37a05b96-d05b-4c37-ad49-2b5a7e642758" />
+# LearnPath 🎓
 
-## Getting Started
+**AI-Powered Course Discovery & Learning Platform**
 
-First, run the development server:
+LearnPath is a full-stack agentic AI application that helps students discover the right courses through AI-powered recommendations and an intelligent chat assistant, while giving instructors a simple platform to publish and manage their own courses.
 
+---
+
+
+## 🚀 Live Demo
+
+- **Live Website:** https://learn-path-sandy.vercel.app
+- **Frontend Repository:** https://github.com/WebdeveloperNahid/learn_path
+- **Backend Repository:** https://github.com/WebdeveloperNahid/learn_path_server
+
+---
+
+## 📖 About the Project
+
+LearnPath is a single, unified course marketplace — similar in concept to Udemy or Coursera — where:
+
+- **Instructors** create an account, publish courses, and manage their own listings.
+- **Students** create an account, browse/search/filter courses, view detailed course pages, and enroll.
+- **AI features** are woven directly into the platform to make course discovery and learning support smarter and more personal.
+
+---
+
+## ✨ Key Features
+
+### For Everyone
+- Modern, responsive landing page (Hero slider, Features, Categories, Stats, Testimonials, FAQ, Newsletter)
+- Course listing/explore page with **search, category & level filters, sorting, and pagination**
+- Public course details pages with gallery, description, requirements, and reviews
+- Fully responsive design across mobile, tablet, and desktop
+- Email/password authentication + **Google Social Login**
+- One-click **Demo Login** (Student & Instructor) for quick testing
+
+### For Students
+- Personalized dashboard
+- AI-powered course recommendations based on interests and enrollment history
+- AI Chat Assistant for course-related questions and guidance
+
+### For Instructors
+- Protected **"Create Course"** page (`/dashboard/instructor/add-course`)
+- Protected **"Manage Courses"** page to view, edit, and delete their own listings
+- Full control over their own published content
+
+---
+
+## 🤖 Agentic AI Features
+
+1. **AI Smart Recommendation Engine** — Analyzes a student's interests and enrollment history to recommend the most relevant courses, with reasoning behind each suggestion.
+2. **AI Chat Assistant** — A context-aware chat assistant that understands the platform, answers course-related questions, and maintains conversation history.
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Framer Motion, Better Auth, HeroUI, Gravity UI, React Hot Toast
+
+**Backend:** Node.js, Express.js, TypeScript, MongoDB (Atlas)
+
+**AI Integration:** Google Gemini API
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- A MongoDB Atlas account & cluster
+- A Google Cloud project with OAuth credentials
+- A Gemini API key
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/WebdeveloperNahid/learn_path.git
+cd learn_path
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Backend Setup
+```bash
+git clone https://github.com/WebdeveloperNahid/learn_path_server.git
+cd learn_path_server
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env` file:
+```env
+MONGO_DB_URI=your_mongodb_connection_string
+AUTH_DB_NAME=learnpath
+FRONTEND_URL=http://localhost:3000
+PORT=5000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run the backend:
+```bash
+npm run dev
+```
 
-## Learn More
+### 3. Frontend Setup
+```bash
+cd learn_path
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file:
+```env
+NEXT_PUBLIC_BASE_URL=http://localhost:5000
+BETTER_AUTH_SECRET=your_random_secret_key
+BETTER_AUTH_URL=http://localhost:3000
+MONGO_DB_URI=your_mongodb_connection_string
+AUTH_DB_NAME=learnpath
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GEMINI_API_KEY=your_gemini_api_key
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run the frontend:
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The app will be available at `http://localhost:3000`, with the API running at `http://localhost:5000`.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📌 Roles
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+LearnPath uses a simple two-role system:
+- **Student** — browses and enrolls in courses, receives AI recommendations
+- **Instructor** — creates and manages their own courses
+
+---
+
+## 🎨 Design System
+
+- **Primary colors:** Indigo & Violet (gradient)
+- **Accent color:** Amber
+- **Neutral:** Slate
+
+---
+
+## 📄 License
+
+This project was built for educational purposes as part of an assignment submission.
