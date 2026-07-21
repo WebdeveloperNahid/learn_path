@@ -89,13 +89,15 @@ export default function AddCoursePage() {
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [aiGenerating, setAiGenerating] = useState(false);
-  const [descriptionLength, setDescriptionLength] = useState <
-  "short" | "medium" | "long"
->("medium");
+  const [attempt, setAttempt] = useState(1);
 
-const handleChange = (field: keyof CourseFormState, value: string) => {
-  setForm((prev) => ({ ...prev, [field]: value }));
-};
+  const [descriptionLength, setDescriptionLength] = useState<
+    "short" | "medium" | "long"
+  >("medium");
+
+  const handleChange = (field: keyof CourseFormState, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
 
   const updateListItem = (
     list: string[],
@@ -136,7 +138,9 @@ const handleChange = (field: keyof CourseFormState, value: string) => {
         category: form.category,
         level: form.level,
         length: descriptionLength,
+        attempt,
       });
+      setAttempt((prev) => prev + 1);
 
       if (result?.description) {
         const sentences = result.description.split(". ");
@@ -601,8 +605,8 @@ const handleChange = (field: keyof CourseFormState, value: string) => {
                   {aiGenerating
                     ? "Generating..."
                     : form.description
-                    ? "Regenerate"
-                    : "Generate with AI"}
+                      ? "Regenerate"
+                      : "Generate with AI"}
                 </button>
               </div>
             </div>

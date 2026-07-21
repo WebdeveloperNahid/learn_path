@@ -1,3 +1,4 @@
+import EnrollButton from "@/Components/EnrollButton";
 import { getCourseById } from "@/lib/api/get-course";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +21,9 @@ type CourseDetailsPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export default async function CourseDetailsPage({ params }: CourseDetailsPageProps) {
+export default async function CourseDetailsPage({
+  params,
+}: CourseDetailsPageProps) {
   const { id } = await params;
   const course = await getCourseById(id);
 
@@ -32,7 +35,7 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
     course.originalPrice && course.originalPrice > course.price;
   const discountPercent = hasDiscount
     ? Math.round(
-        ((course.originalPrice! - course.price) / course.originalPrice!) * 100
+        ((course.originalPrice! - course.price) / course.originalPrice!) * 100,
       )
     : 0;
 
@@ -45,9 +48,13 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <nav className="mb-5 flex items-center gap-2 text-xs font-semibold text-indigo-200">
-            <Link href="/" className="hover:text-white">Home</Link>
+            <Link href="/" className="hover:text-white">
+              Home
+            </Link>
             <span>/</span>
-            <Link href="/explore" className="hover:text-white">Explore</Link>
+            <Link href="/explore" className="hover:text-white">
+              Explore
+            </Link>
             <span>/</span>
             <span className="text-white">{course.category}</span>
           </nav>
@@ -87,8 +94,12 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
                   {course.instructor.charAt(0)}
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-indigo-200">Instructor</p>
-                  <p className="text-sm font-bold text-white">{course.instructor}</p>
+                  <p className="text-xs font-medium text-indigo-200">
+                    Instructor
+                  </p>
+                  <p className="text-sm font-bold text-white">
+                    {course.instructor}
+                  </p>
                 </div>
               </div>
             </div>
@@ -112,7 +123,11 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
                     }`}
                   >
                     <Image
-                      src={img && img.trim() !== "" ? img : "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"}
+                      src={
+                        img && img.trim() !== ""
+                          ? img
+                          : "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
+                      }
                       alt={`${course.title} preview ${i + 1}`}
                       fill
                       sizes="(max-width: 640px) 50vw, 33vw"
@@ -125,7 +140,9 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
 
             {/* Overview */}
             <div className="rounded-2xl border-2 border-slate-200 bg-white p-6">
-              <h2 className="text-lg font-extrabold text-slate-900">Course Overview</h2>
+              <h2 className="text-lg font-extrabold text-slate-900">
+                Course Overview
+              </h2>
               <p className="mt-3 text-sm font-medium leading-relaxed text-slate-600">
                 {course.description}
               </p>
@@ -134,12 +151,16 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
             {/* What you'll learn */}
             {course.learnings && course.learnings.length > 0 && (
               <div className="rounded-2xl border-2 border-slate-200 bg-white p-6">
-                <h2 className="text-lg font-extrabold text-slate-900">What You&apos;ll Learn</h2>
+                <h2 className="text-lg font-extrabold text-slate-900">
+                  What You&apos;ll Learn
+                </h2>
                 <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {course.learnings.map((item, i) => (
                     <div key={i} className="flex items-start gap-2.5">
                       <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-                      <span className="text-sm font-medium text-slate-700">{item}</span>
+                      <span className="text-sm font-medium text-slate-700">
+                        {item}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -149,12 +170,16 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
             {/* Requirements — Key Info / Specifications */}
             {course.requirements && course.requirements.length > 0 && (
               <div className="rounded-2xl border-2 border-slate-200 bg-white p-6">
-                <h2 className="text-lg font-extrabold text-slate-900">Requirements</h2>
+                <h2 className="text-lg font-extrabold text-slate-900">
+                  Requirements
+                </h2>
                 <ul className="mt-4 space-y-2.5">
                   {course.requirements.map((item, i) => (
                     <li key={i} className="flex items-start gap-2.5">
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
-                      <span className="text-sm font-medium text-slate-700">{item}</span>
+                      <span className="text-sm font-medium text-slate-700">
+                        {item}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -163,7 +188,9 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
 
             {/* Reviews placeholder */}
             <div className="rounded-2xl border-2 border-slate-200 bg-white p-6">
-              <h2 className="text-lg font-extrabold text-slate-900">Reviews & Ratings</h2>
+              <h2 className="text-lg font-extrabold text-slate-900">
+                Reviews & Ratings
+              </h2>
               {course.studentsEnrolled > 0 ? (
                 <div className="mt-4 flex items-center gap-4">
                   <span className="text-3xl font-extrabold text-slate-900">
@@ -187,7 +214,8 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
                 </div>
               ) : (
                 <p className="mt-3 text-sm font-medium text-slate-500">
-                  No reviews yet. Be the first to enroll and share your feedback!
+                  No reviews yet. Be the first to enroll and share your
+                  feedback!
                 </p>
               )}
             </div>
@@ -198,7 +226,11 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
             <div className="sticky top-24 overflow-hidden rounded-2xl border-2 border-slate-200 bg-white shadow-lg shadow-slate-200/50">
               <div className="relative aspect-video w-full bg-slate-100">
                 <Image
-                  src={course.image && course.image.trim() !== "" ? course.image : "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"}
+                  src={
+                    course.image && course.image.trim() !== ""
+                      ? course.image
+                      : "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
+                  }
                   alt={course.title}
                   fill
                   sizes="400px"
@@ -223,9 +255,11 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
                   )}
                 </div>
 
-                <button className="mt-5 w-full rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 py-3 text-sm font-bold text-white shadow-md shadow-indigo-200 transition hover:shadow-lg hover:shadow-indigo-300">
-                  Enroll Now
-                </button>
+                <EnrollButton
+                  courseId={course._id}
+                  courseTitle={course.title}
+                  price={course.price}
+                />
 
                 <p className="mt-3 text-center text-[11px] font-semibold text-slate-400">
                   30-day money-back guarantee
@@ -237,28 +271,36 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
                       <FiBarChart2 className="h-4 w-4 text-indigo-500" />
                       Level
                     </span>
-                    <span className="font-bold text-slate-900">{course.level}</span>
+                    <span className="font-bold text-slate-900">
+                      {course.level}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="flex items-center gap-2 font-medium text-slate-600">
                       <FiClock className="h-4 w-4 text-indigo-500" />
                       Duration
                     </span>
-                    <span className="font-bold text-slate-900">{course.duration}</span>
+                    <span className="font-bold text-slate-900">
+                      {course.duration}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="flex items-center gap-2 font-medium text-slate-600">
                       <FiCalendar className="h-4 w-4 text-indigo-500" />
                       Starts
                     </span>
-                    <span className="font-bold text-slate-900">{course.startDate}</span>
+                    <span className="font-bold text-slate-900">
+                      {course.startDate}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="flex items-center gap-2 font-medium text-slate-600">
                       <FiMapPin className="h-4 w-4 text-indigo-500" />
                       Mode
                     </span>
-                    <span className="font-bold text-slate-900">{course.mode}</span>
+                    <span className="font-bold text-slate-900">
+                      {course.mode}
+                    </span>
                   </div>
                   {course.certificate && (
                     <div className="flex items-center justify-between text-sm">
@@ -266,7 +308,9 @@ export default async function CourseDetailsPage({ params }: CourseDetailsPagePro
                         <FiAward className="h-4 w-4 text-amber-500" />
                         Certificate
                       </span>
-                      <span className="font-bold text-emerald-600">Included</span>
+                      <span className="font-bold text-emerald-600">
+                        Included
+                      </span>
                     </div>
                   )}
                 </div>

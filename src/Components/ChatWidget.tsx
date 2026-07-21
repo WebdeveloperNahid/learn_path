@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { HiOutlineChatBubbleLeftRight, HiOutlineXMark, HiOutlinePaperAirplane } from "react-icons/hi2";
+import {
+  HiOutlineChatBubbleLeftRight,
+  HiOutlineXMark,
+  HiOutlinePaperAirplane,
+} from "react-icons/hi2";
 import { HiSparkles } from "react-icons/hi2";
 import { sendChatMessage } from "@/lib/actions/ai";
 
@@ -17,23 +21,26 @@ const INITIAL_PROMPTS = [
 ];
 
 // প্রতিটা AI reply-র পর দেখানোর জন্য rotating follow-up prompt pool
-const FOLLOW_UP_POOL = [
-  "Tell me more about that",
-  "Show me similar courses",
-  "What's the price range?",
-  "How do I enroll?",
-  "Any beginner-friendly options?",
-  "Who teaches this course?",
-];
+// const FOLLOW_UP_POOL = [
+//   "Tell me more about that",
+//   "Show me similar courses",
+//   "What's the price range?",
+//   "How do I enroll?",
+//   "Any beginner-friendly options?",
+//   "Who teaches this course?",
+// ];
 
-function getRandomFollowUps(count = 3) {
-  return [...FOLLOW_UP_POOL].sort(() => 0.5 - Math.random()).slice(0, count);
-}
+// function getRandomFollowUps(count = 3) {
+//   return [...FOLLOW_UP_POOL].sort(() => 0.5 - Math.random()).slice(0, count);
+// }
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: "model", text: "Hi! I'm the LearnPath assistant. Ask me about courses, categories, or how to get started." },
+    {
+      role: "model",
+      text: "Hi! I'm the LearnPath assistant. Ask me about courses, categories, or how to get started.",
+    },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -41,7 +48,10 @@ export default function ChatWidget() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
   }, [messages, loading]);
 
   const handleSend = async (textOverride?: string) => {
@@ -55,17 +65,35 @@ export default function ChatWidget() {
     setLoading(true);
 
     try {
-      const history = newMessages.slice(0, -1).map((m) => ({ role: m.role, text: m.text }));
+      const history = newMessages
+        .slice(0, -1)
+        .map((m) => ({ role: m.role, text: m.text }));
       const result = await sendChatMessage(text, history);
 
       if (result?.reply) {
         setMessages((prev) => [...prev, { role: "model", text: result.reply }]);
-        setFollowUps(getRandomFollowUps()); // ✅ প্রতিটা AI reply-র পর নতুন follow-up suggestion
+        setFollowUps(
+          result.followUps && result.followUps.length > 0
+            ? result.followUps
+            : [],
+        );
       } else {
-        setMessages((prev) => [...prev, { role: "model", text: "Sorry, something went wrong. Please try again." }]);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "model",
+            text: "Sorry, something went wrong. Please try again.",
+          },
+        ]);
       }
     } catch {
-      setMessages((prev) => [...prev, { role: "model", text: "Sorry, something went wrong. Please try again." }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "model",
+          text: "Sorry, something went wrong. Please try again.",
+        },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -99,9 +127,15 @@ export default function ChatWidget() {
           </div>
 
           {/* Messages */}
-          <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-slate-50 px-4 py-4">
+          <div
+            ref={scrollRef}
+            className="flex-1 space-y-3 overflow-y-auto bg-slate-50 px-4 py-4"
+          >
             {messages.map((m, i) => (
-              <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                key={i}
+                className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+              >
                 <div
                   className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm font-medium ${
                     m.role === "user"

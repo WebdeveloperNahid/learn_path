@@ -11,6 +11,7 @@ import {
 } from "@gravity-ui/icons";
 import { useSession } from "@/lib/auth-client";
 import { getAllCourses } from "@/lib/api/get-course";
+import RecommendedForYou from "@/Components/RecommendedForYou";
 
 type Course = {
   _id: string;
@@ -150,7 +151,12 @@ const StudentPage = () => {
           </div>
         </div>
       </div>
+
+      <RecommendedForYou />
+
     </div>
+
+    
   );
 };
 

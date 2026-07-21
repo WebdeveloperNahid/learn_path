@@ -2,13 +2,12 @@
 
 import { serverMutation } from "../core/server";
 
-// import { protectedFetch, serverMutation } from "../core/server";
-
 type GenerateDescriptionInput = {
   title: string;
   category: string;
   level: string;
   length?: "short" | "medium" | "long";
+  attempt?: number;
 };
 
 type GenerateDescriptionResponse = {
@@ -32,6 +31,7 @@ type ChatMessage = {
 
 type ChatResponse = {
   reply: string;
+  followUps: string[];
 };
 
 export const sendChatMessage = async (
@@ -41,6 +41,18 @@ export const sendChatMessage = async (
   return serverMutation<ChatResponse>(
     "/api/ai/chat",
     { message, history },
+    "POST"
+  );
+};
+
+export const sendRecommendationFeedback = async (
+  userId: string,
+  courseId: string,
+  action: "clicked" | "dismissed"
+) => {
+  return serverMutation(
+    "/api/ai/recommend/feedback",
+    { userId, courseId, action },
     "POST"
   );
 };
