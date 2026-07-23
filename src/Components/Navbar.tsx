@@ -8,6 +8,8 @@ import { HiMenu, HiX, HiOutlineLogout } from "react-icons/hi";
 import { HiSparkles } from "react-icons/hi2";
 import toast from "react-hot-toast";
 import { authClient, useSession } from "@/lib/auth-client";
+import { ThemeToggle } from "./ThemeToggle";
+
 
 type TNavUser = {
   name: string;
@@ -130,6 +132,8 @@ export default function Navbar({ user }: NavbarProps) {
             );
           })}
         </nav>
+
+        <ThemeToggle />
 
         {/* Desktop Right Side — Conditional Auth UI */}
         <div className="hidden items-center gap-3 md:flex">

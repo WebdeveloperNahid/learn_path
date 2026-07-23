@@ -5,6 +5,7 @@ import Navbar from "../Components/Navbar";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/Components/Footer";
 import ChatWidget from "@/Components/ChatWidget";
+import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +31,16 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+        <Providers>
         <Toaster position="top-right" />
         <Navbar></Navbar>
         {children}
         <Footer></Footer>
         <ChatWidget></ChatWidget>
+        </Providers>
     
         </body>
     </html>
