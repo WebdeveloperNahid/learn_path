@@ -1,4 +1,5 @@
-<img width="1916" height="967" alt="Screenshot 2026-07-20 142149" src="https://github.com/user-attachments/assets/37a05b96-d05b-4c37-ad49-2b5a7e642758" />
+<img width="1919" height="1040" alt="Screenshot 2026-07-24 175449" src="https://github.com/user-attachments/assets/7f6d2eb4-1885-40c8-acfe-0516584e918c" />
+
 # LearnPath 🎓
 
 **AI-Powered Course Discovery & Learning Platform**
